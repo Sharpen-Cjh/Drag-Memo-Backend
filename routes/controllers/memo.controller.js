@@ -1,11 +1,11 @@
-const Post = require("../../models/PostModel");
+const Memo = require("../../models/MemoModel");
 
-const createPost = async (req, res, next) => {
+const createMemo = async (req, res, next) => {
   try {
     console.log(req.body);
-    const postContent = req.body;
+    const memo = req.body;
 
-    await Post.create(postContent);
+    await Memo.create(memo);
 
     const responseBody = {};
     responseBody.result = "ok";
@@ -18,5 +18,5 @@ const createPost = async (req, res, next) => {
 };
 
 module.exports = {
-  createPost,
+  createMemo,
 };
