@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/memo", memoRouter);
+app.use("/memos", memoRouter);
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`);
