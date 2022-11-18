@@ -33,7 +33,26 @@ const createMemo = async (req, res, next) => {
   }
 };
 
+const patchMemo = async (req, res, next) => {
+  try {
+    const memoData = req.body;
+    console.log(memoData);
+    const memo = await Memo.findOne({ title: memoData.title });
+    const responseBody = {};
+
+    memo.description = memoData.description;
+    await memo.save();
+
+    responseBody.success = "true";
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createMemo,
   getMemo,
+  patchMemo,
 };
