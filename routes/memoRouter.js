@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const memoController = require("./controllers/memo.controller");
+const memoController = require("./controllers/memoController");
 
 const { getMemo, createMemo, patchMemo, deleteMemo } = memoController;
 
