@@ -17,7 +17,7 @@ const postLogin = async (req, res, next) => {
     if (!user) {
       await User.create({ username, googleId });
     }
-    res.status(200);
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }

@@ -4,8 +4,8 @@ const memoController = require("./controllers/memoController");
 
 const { getMemo, createMemo, patchMemo, deleteMemo } = memoController;
 
-router.post("/", createMemo);
+router.post("/memo", createMemo);
 
-router.route("/:memoId").get(getMemo).patch(patchMemo).delete(deleteMemo);
+router.route("/memos/:memoId").get(getMemo).patch(patchMemo).delete(deleteMemo);
 
 module.exports = router;
