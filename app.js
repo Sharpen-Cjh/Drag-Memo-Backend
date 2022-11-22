@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 app.use(authenticate);
 app.use("/login", loginRouter);
-app.use("/users/:userId", memoRouter);
+app.use("/users/", memoRouter);
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`);
