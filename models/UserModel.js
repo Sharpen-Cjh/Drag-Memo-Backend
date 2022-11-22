@@ -7,6 +7,12 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  memos: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Memo",
+    },
+  ],
 });
 
 const User = model("User", userSchema);
