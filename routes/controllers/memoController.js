@@ -38,24 +38,53 @@ const getMyMemos = async (req, res, next) => {
     const user = await User.findOne({ googleId: userId }).populate("memos");
 
     res.status(200).json(user);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const getMyMemosTitles = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findOne({ googleId: userId }).populate("memos");
+    const memosTitles = [];
+
+    user.memos.map((memo) => {
+      memosTitles.push(memo.title);
+    });
+
+    res.status(200).json(memosTitles);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 };
 
 const createMemo = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const user = await User.findOne({ googleId: userId });
-    const memoData = { ...req.body, author: user._id };
-    const memo = await Memo.create(memoData);
-    const responseBody = {};
+    const user = await User.findOne({ googleId: userId }).populate("memos");
+    const { title } = req.body;
+    const alreadyHasTitle = user.memos.filter((memo) => memo.title === title);
 
-    user.memos.push(memo._id);
-    user.save();
+    if (alreadyHasTitle.length === 0) {
+      const memoData = { ...req.body, author: user._id };
+      const memo = await Memo.create(memoData);
+      const responseBody = {};
 
-    responseBody.data = memo;
-    responseBody.success = "true";
+      user.memos.push(memo._id);
+      user.save();
 
-    res.status(201).json(responseBody);
+      responseBody.data = memo;
+      responseBody.success = "true";
+
+      res.status(201).json(responseBody);
+
+      return;
+    } else {
+      next(error);
+    }
   } catch (error) {
     console.log(error);
     next(error);
@@ -125,6 +154,7 @@ module.exports = {
   createMemo,
   getMemo,
   getMyMemos,
+  getMyMemosTitles,
   patchMemo,
   deleteMemo,
 };
